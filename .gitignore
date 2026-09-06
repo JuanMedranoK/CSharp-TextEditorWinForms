@@ -1,0 +1,40 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+out/
+
+# VS Code
+.vscode/
+
+# Rider
+.idea/
+
+# Packages
+packages/
+*.nupkg
+
+# NuGet
+.nuget/
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# JetBrains ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# User-specific files
+*.userprefs
