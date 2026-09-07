@@ -20,40 +20,55 @@ namespace CSharp_TextEditorWinForms
 
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog OpenFile = new OpenFileDialog();
+            Abrir();
+        }
+
+        private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (archivo != null)
+                GuardarArchivo();
+            else
+                GuardarComo();
+        }
+
+        private void guardarComoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GuardarComo();
+        }
+        private void GuardarArchivo()
+        {
+            using StreamWriter sw = new(archivo!);
+            sw.Write(richTextBox1.Text);
+        }
+        private void GuardarComo()
+        {
+            SaveFileDialog saveFile = new()
+            {
+                Filter = "Archivos de texto (*.txt)|*.txt|Todos los archivos (*.*)|*.*",
+                DefaultExt = "txt",
+                AddExtension = true
+            };
+
+            if (saveFile.ShowDialog() == DialogResult.OK)
+            {
+                archivo = saveFile.FileName;
+                GuardarArchivo();
+            }
+        }
+
+        private void Abrir() 
+        {
+            OpenFileDialog OpenFile = new()
+            {
+                Filter = "Archivos de texto (*.txt)|*.txt|Todos los archivos (*.*)|*.*"
+            };
 
             if (OpenFile.ShowDialog() == DialogResult.OK)
             {
                 archivo = OpenFile.FileName;
 
-                using (StreamReader rr = new StreamReader(archivo))
-                {
-                    richTextBox1.Text = rr.ReadToEnd();
-                }
-            }
-        }
-
-        private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog SaveFile = new SaveFileDialog();
-
-            if(archivo != null) 
-            {
-                using (StreamWriter sw = new StreamWriter(archivo))
-                {
-                    sw.Write(richTextBox1.Text);
-                }
-            }
-            else 
-            { 
-               if(SaveFile.ShowDialog() == DialogResult.OK)
-                {
-                    archivo = SaveFile.FileName;
-                    using (StreamWriter sw = new StreamWriter(archivo))
-                    {
-                        sw.Write(richTextBox1.Text);
-                    }
-                }
+                using StreamReader rr = new(archivo);
+                richTextBox1.Text = rr.ReadToEnd();
             }
         }
     }
